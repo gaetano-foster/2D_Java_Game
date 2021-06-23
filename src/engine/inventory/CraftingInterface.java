@@ -9,6 +9,7 @@ import engine.utils.Handler;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 
 public class CraftingInterface
 {
@@ -27,7 +28,8 @@ public class CraftingInterface
         this.inventory = inventory;
         recipesList = new ArrayList<CraftingRecipe>();
         y = handler.getGame().getHeight() - 1;
-        recipesList.add(new CraftingRecipe(ItemManager.iceItem.createNew(2), ItemManager.rockItem.createNew(2), ItemManager.woodItem.createNew(1)));
+        recipesList.add(new CraftingRecipe(ItemManager.iceCubeItem.createNew(2), ItemManager.iceCubeItem.createNew(2), ItemManager.iceItem.createNew(1)));
+        recipesList.add(new CraftingRecipe(ItemManager.obsidianShardItem.createNew(2), ItemManager.obsidianShardItem.createNew(2), ItemManager.obsidianItem.createNew(1)));
     }
 
     public void update()
@@ -47,7 +49,6 @@ public class CraftingInterface
         if (handler.getKeyManager().keyJustDown(KeyEvent.VK_SPACE))
         {
             craft(recipesList.get(selectedItem));
-            System.out.println("crafted");
         }
         if (handler.getKeyManager().keyJustDown(KeyEvent.VK_W))
             selectedItem--;
@@ -57,6 +58,10 @@ public class CraftingInterface
 
     public void craft(CraftingRecipe recipe)
     {
+        boolean canCraft = false;
+        Item item = null;
+        Item item2 = null;
+
         for (Item i : inventory.getInventoryItems())
         {
             if (i.getID() == recipe.getItem1().getID() && i.getCount() >= recipe.getItem1().getCount())
@@ -65,12 +70,21 @@ public class CraftingInterface
                 {
                     if (t.getID() == recipe.getItem2().getID() && t.getCount() >= recipe.getItem2().getCount())
                     {
-                        i.setCount(i.getCount() - recipe.getItem1().getCount());
-                        t.setCount(t.getCount() - recipe.getItem2().getCount());
-                        inventory.addItem(recipe.getProduct().createNew(recipe.getCount()));
+                        canCraft = true;
+                        item = i;
+                        item2 = t;
+                        break;
                     }
                 }
             }
+        }
+
+        if (item != null && item2 != null)
+        {
+            item.setCount(item.getCount() - recipe.getItem1().getCount());
+            item2.setCount(item2.getCount() - recipe.getItem2().getCount());
+            inventory.addItem(recipe.getProduct().createNew(recipe.getCount()));
+            return;
         }
     }
 

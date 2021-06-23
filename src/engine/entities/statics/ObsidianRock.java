@@ -16,7 +16,7 @@ public class ObsidianRock extends StaticEntity
     @Override
     public void die()
     {
-        handler.getWorld().getItemManager().addItem(ItemManager.obsidianItem.createNew((int)x, (int)y, 1));
+        handler.getWorld().getItemManager().addItem(ItemManager.obsidianShardItem.createNew((int)x, (int)y, 1));
     }
 
     @Override

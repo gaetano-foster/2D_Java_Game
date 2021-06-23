@@ -15,8 +15,10 @@ public class ItemManager
     public static Item woodItem = new Item(Assets.woodItem, "Wood", 0);
     public static Item rockItem = new Item(Assets.rock, "Rock", 1);
     public static Item sandItem = new Item(Assets.sandDune, "Sand", 2);
-    public static Item iceItem = new Item(Assets.iceCubes, "Ice", 3);
-    public static Item obsidianItem = new Item(Assets.obsidianShard, "Obsidian", 4);
+    public static Item iceCubeItem = new Item(Assets.iceCubes, "Ice Cube", 3);
+    public static Item obsidianShardItem = new Item(Assets.obsidianShard, "Obsidian Shard", 4);
+    public static Item iceItem = new Item(Assets.iceRock, "Ice", 5);
+    public static Item obsidianItem = new Item(Assets.obsidianRock, "Obsidian", 6);
 
     // rest
 

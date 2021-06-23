@@ -18,7 +18,7 @@ public class IceRock extends StaticEntity
     @Override
     public void die()
     {
-        handler.getWorld().getItemManager().addItem(ItemManager.iceItem.createNew((int)x, (int)y, 1));
+        handler.getWorld().getItemManager().addItem(ItemManager.iceCubeItem.createNew((int)x, (int)y, 1));
         handler.getWorld().setTile((int)x / Tile.SIZE, (int)y / Tile.SIZE, TileManager.waterTile.getID());
     }
 

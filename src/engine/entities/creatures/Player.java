@@ -220,6 +220,10 @@ public class Player extends Creature
                     inventory.addItem(ItemManager.rockItem.createNew(1));
                 else if (posTileID == TileManager.sandTile.getID() || posTileID == TileManager.sandWallTile.getID())
                     inventory.addItem(ItemManager.sandItem.createNew(1));
+                else if (posTileID == TileManager.iceTile.getID() || posTileID == TileManager.iceWallTile.getID())
+                    inventory.addItem(ItemManager.iceItem.createNew(1));
+                else if (posTileID == TileManager.obsidianTile.getID() || posTileID == TileManager.obsidianWallTile.getID())
+                    inventory.addItem(ItemManager.obsidianItem.createNew(1));
 
                 handler.getWorld().setTile(mouseX / Tile.SIZE, mouseY / Tile.SIZE, handler.getWorld().getBelowTile(mouseX / Tile.SIZE, mouseY / Tile.SIZE).getID());
                 handler.getWorld().setBelowTile(mouseX / Tile.SIZE, mouseY / Tile.SIZE, handler.getWorld().getDefBelowTile(mouseX / Tile.SIZE, mouseY / Tile.SIZE).getID());
@@ -279,6 +283,21 @@ public class Player extends Creature
                 else
                     blockType = TileManager.obsidianTile.getID();
                 canBuild = true;
+            }
+            else if (inventory.getActiveItem().getID() == ItemManager.iceItem.getID() && inventory.getActiveItem().getCount() > 0)
+            {
+                if (wall)
+                    blockType = TileManager.iceWallTile.getID();
+                else
+                    blockType = TileManager.iceTile.getID();
+                canBuild = true;
+            } else if (inventory.getActiveItem().getID() == ItemManager.obsidianShardItem.getID() && inventory.getActiveItem().getCount() > 0)
+            {
+                canBuild = false;
+            }
+            else if (inventory.getActiveItem().getID() == ItemManager.iceCubeItem.getID() && inventory.getActiveItem().getCount() > 0)
+            {
+                canBuild = false;
             }
 
             if (inventory.getActiveItem().getCount() == 0)

@@ -1,6 +1,5 @@
 package engine.inventory;
 
-import com.sun.jdi.connect.Connector;
 import engine.gfx.Assets;
 import engine.gfx.Text;
 import engine.items.Item;
@@ -30,8 +29,8 @@ public class Inventory
         debug = debugMode;
         if (debug)
         {
-            addItem(ItemManager.iceItem.createNew(64));
-            addItem(ItemManager.obsidianItem.createNew(64));
+            addItem(ItemManager.iceCubeItem.createNew(64));
+            addItem(ItemManager.obsidianShardItem.createNew(64));
             addItem(ItemManager.woodItem.createNew(64));
             addItem(ItemManager.rockItem.createNew(64));
             addItem(ItemManager.sandItem.createNew(64));

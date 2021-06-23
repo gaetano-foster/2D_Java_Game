@@ -57,8 +57,8 @@ public class Assets
         dirt = tiles.crop(1, 0, size, size, size);
         dirtWall = tiles.crop(1, 1, size, size, size);
         water = tiles.crop(2, 0, size, size, size);
-        ice = tiles.crop(3, 1, size, size, size);
-        iceWall = tiles.crop(4, 1, size, size, size);
+        ice = tiles.crop(2, 1, size, size, size);
+        iceWall = tiles.crop(3, 1, size, size, size);
         lava = tiles.crop(3, 0, size, size, size);
         obsidian = tiles.crop(4, 1, size, size, size);
         obsidianWall = tiles.crop(5, 1, size, size, size);
