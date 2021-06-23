@@ -1,6 +1,7 @@
 package engine.entities.creatures;
 
 import engine.entities.Entity;
+import engine.inventory.CraftingInterface;
 import engine.inventory.Inventory;
 import engine.items.ItemManager;
 import engine.tiles.Tile;
@@ -27,6 +28,7 @@ public class Player extends Creature
     private boolean running = false;
     private int blockType = 0;
     private Inventory inventory;
+    private CraftingInterface craftingInterface;
     private boolean canBuild = true;
     private boolean wall = false;
 
@@ -51,7 +53,8 @@ public class Player extends Creature
         animLeft = new Animation(100, Assets.player_left);
         animRight = new Animation(100, Assets.player_right);
 
-        inventory = new Inventory(handler, false);
+        inventory = new Inventory(handler, true);
+        craftingInterface = new CraftingInterface(handler, inventory);
     }
 
     @Override
@@ -98,6 +101,7 @@ public class Player extends Creature
             y = handler.getWorld().getHeight() * Tile.SIZE;
 
         inventory.update();
+        craftingInterface.update();
     }
 
     private void checkAttacks()
@@ -309,6 +313,7 @@ public class Player extends Creature
     public void topRender(Graphics g)
     {
         inventory.render(g);
+        craftingInterface.render(g);
     }
 
     private BufferedImage getCurrentAnimationFrame()

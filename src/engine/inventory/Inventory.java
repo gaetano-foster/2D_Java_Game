@@ -30,11 +30,11 @@ public class Inventory
         debug = debugMode;
         if (debug)
         {
-            addItem(ItemManager.iceItem.createNew(1));
-            addItem(ItemManager.obsidianItem.createNew(1));
-            addItem(ItemManager.woodItem.createNew(1));
-            addItem(ItemManager.rockItem.createNew(1));
-            addItem(ItemManager.sandItem.createNew(1));
+            addItem(ItemManager.iceItem.createNew(64));
+            addItem(ItemManager.obsidianItem.createNew(64));
+            addItem(ItemManager.woodItem.createNew(64));
+            addItem(ItemManager.rockItem.createNew(64));
+            addItem(ItemManager.sandItem.createNew(64));
         }
     }
 
@@ -153,6 +153,12 @@ public class Inventory
     }
 
     // getters n setters
+
+
+    public ArrayList<Item> getInventoryItems()
+    {
+        return inventoryItems;
+    }
 
     public Handler getHandler()
     {

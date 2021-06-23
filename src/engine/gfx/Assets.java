@@ -9,7 +9,7 @@ public class Assets
 {
     private static final int size = 16;
 
-    public static Font font56, font168;
+    public static Font font28, font56, font168;
 
     public static BufferedImage
             grass, grassWall, dirt, dirtWall,
@@ -43,6 +43,7 @@ public class Assets
 
     public static void load()
     {
+        font28 = FontLoader.loadFont("res/fonts/consolas.ttf", 28);
         font56 = FontLoader.loadFont("res/fonts/consolas.ttf", 56);
         font168 = FontLoader.loadFont("res/fonts/consolas.ttf", 168);
         SpriteSheet tiles = new SpriteSheet(ImageLoader.loadImage("/textures/tilemap.png"));
