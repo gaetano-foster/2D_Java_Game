@@ -5,6 +5,7 @@ import engine.entities.creatures.Player;
 import engine.gfx.Camera;
 import engine.input.KeyManager;
 import engine.input.MouseManager;
+import engine.tiles.TileManager;
 import engine.worlds.World;
 
 public class Handler
@@ -45,6 +46,11 @@ public class Handler
     public Game getGame()
     {
         return game;
+    }
+
+    public TileManager getTileManager()
+    {
+        return game.getTileManager();
     }
 
     public void setGame(Game game)

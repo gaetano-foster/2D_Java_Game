@@ -31,6 +31,9 @@ public class Inventory
         {
             addItem(ItemManager.iceCubeItem.createNew(64));
             addItem(ItemManager.obsidianShardItem.createNew(64));
+            addItem(ItemManager.iceItem.createNew(64));
+            addItem(ItemManager.obsidianItem.createNew(64));
+            addItem(ItemManager.doorItem.createNew(64));
             addItem(ItemManager.woodItem.createNew(64));
             addItem(ItemManager.rockItem.createNew(64));
             addItem(ItemManager.sandItem.createNew(64));

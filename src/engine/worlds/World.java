@@ -79,7 +79,15 @@ public class World
         {
             for (int x = xStart; x < xEnd; x++)
             {
-                getTile(x, y).render(g, (int)(x * Tile.SIZE - handler.getCamera().getxOffset()), (int)(y * Tile.SIZE - handler.getCamera().getyOffset()));
+                if (!handler.getTileManager().tiles[chunk[x][y]].isTransparent())
+                {
+                    getTile(x, y).render(g, (int) (x * Tile.SIZE - handler.getCamera().getxOffset()), (int) (y * Tile.SIZE - handler.getCamera().getyOffset()));
+                }
+                else
+                {
+                    getBelowTile(x, y).render(g, (int) (x * Tile.SIZE - handler.getCamera().getxOffset()), (int) (y * Tile.SIZE - handler.getCamera().getyOffset()));
+                    getTile(x, y).render(g, (int) (x * Tile.SIZE - handler.getCamera().getxOffset()), (int) (y * Tile.SIZE - handler.getCamera().getyOffset()));
+                }
             }
         }
 
@@ -91,7 +99,7 @@ public class World
     {
         if (x < 0 || y < 0 || x >= width || y >= width)
         {
-            return TileManager.grassTile.getID();
+            return handler.getTileManager().grassTile.getID();
         }
 
         return chunk[x][y];
@@ -101,13 +109,13 @@ public class World
     {
         if (x < 0 || y < 0 || x >= width || y >= width)
         {
-            return TileManager.grassTile;
+            return handler.getTileManager().grassTile;
         }
 
-        Tile t = TileManager.tiles[chunk[x][y]];
+        Tile t = handler.getTileManager().tiles[chunk[x][y]];
         if (t == null)
         {
-            return TileManager.grassTile;
+            return handler.getTileManager().grassTile;
         }
         return t;
     }
@@ -116,13 +124,13 @@ public class World
     {
         if (x < 0 || y < 0 || x >= width || y >= width)
         {
-            return TileManager.dirtTile;
+            return handler.getTileManager().dirtTile;
         }
 
-        Tile t = TileManager.tiles[belowChunk[x][y]];
+        Tile t = handler.getTileManager().tiles[belowChunk[x][y]];
         if (t == null)
         {
-            return TileManager.dirtTile;
+            return handler.getTileManager().dirtTile;
         }
         return t;
     }
@@ -131,13 +139,13 @@ public class World
     {
         if (x < 0 || y < 0 || x >= width || y >= width)
         {
-            return TileManager.dirtTile;
+            return handler.getTileManager().dirtTile;
         }
 
-        Tile t = TileManager.tiles[defBelowChunk[x][y]];
+        Tile t = handler.getTileManager().tiles[defBelowChunk[x][y]];
         if (t == null)
         {
-            return TileManager.dirtTile;
+            return handler.getTileManager().dirtTile;
         }
 
         return t;

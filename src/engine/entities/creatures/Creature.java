@@ -56,7 +56,7 @@ public abstract class Creature extends Entity
             }
             else
             {
-                if (handler.getWorld().getTile(tx, (int) (y + bounds.y) / Tile.SIZE) == TileManager.waterTile)
+                if (handler.getWorld().getTile(tx, (int) (y + bounds.y) / Tile.SIZE) == handler.getTileManager().waterTile)
                     speed =
 
                 x = tx * Tile.SIZE - bounds.x - bounds.width - 1;

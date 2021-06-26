@@ -12,6 +12,7 @@ public class ItemManager
     // handler
 
     public static Item[] items = new Item[256];
+
     public static Item woodItem = new Item(Assets.woodItem, "Wood", 0);
     public static Item rockItem = new Item(Assets.rock, "Rock", 1);
     public static Item sandItem = new Item(Assets.sandDune, "Sand", 2);
@@ -19,6 +20,7 @@ public class ItemManager
     public static Item obsidianShardItem = new Item(Assets.obsidianShard, "Obsidian Shard", 4);
     public static Item iceItem = new Item(Assets.iceRock, "Ice", 5);
     public static Item obsidianItem = new Item(Assets.obsidianRock, "Obsidian", 6);
+    public static Item doorItem = new Item(Assets.doorItem, "Door", 7);
 
     // rest
 

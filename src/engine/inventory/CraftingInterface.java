@@ -30,6 +30,7 @@ public class CraftingInterface
         y = handler.getGame().getHeight() - 1;
         recipesList.add(new CraftingRecipe(ItemManager.iceCubeItem.createNew(2), ItemManager.iceCubeItem.createNew(2), ItemManager.iceItem.createNew(1)));
         recipesList.add(new CraftingRecipe(ItemManager.obsidianShardItem.createNew(2), ItemManager.obsidianShardItem.createNew(2), ItemManager.obsidianItem.createNew(1)));
+        recipesList.add(new CraftingRecipe(ItemManager.woodItem.createNew(3), ItemManager.woodItem.createNew(3), ItemManager.doorItem.createNew(3)));
     }
 
     public void update()

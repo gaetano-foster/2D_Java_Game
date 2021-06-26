@@ -5,6 +5,7 @@ import engine.tiles.solid.DirtWallTile;
 import engine.tiles.solid.GrassWallTile;
 import engine.tiles.solid.StoneWallTile;
 import engine.tiles.solid.WoodWallTile;
+import engine.utils.Handler;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -16,15 +17,18 @@ public class Tile
     public static final int SIZE = 50;
 
     protected BufferedImage texture;
+    protected Handler handler;
     protected final int ID;
     protected boolean solid;
+    protected boolean transparent;
 
-    public Tile(BufferedImage texture, int ID)
+    public Tile(BufferedImage texture, Handler handler, int ID)
     {
         this.texture = texture;
+        this.handler = handler;
         this.ID = ID;
 
-        TileManager.tiles[ID] = this;
+        handler.getTileManager().tiles[ID] = this;
     }
 
     public void update()
@@ -50,5 +54,10 @@ public class Tile
     public boolean isSolid()
     {
         return solid;
+    }
+
+    public boolean isTransparent()
+    {
+        return transparent;
     }
 }

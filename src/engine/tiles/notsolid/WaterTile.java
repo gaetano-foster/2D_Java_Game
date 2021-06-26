@@ -2,12 +2,13 @@ package engine.tiles.notsolid;
 
 import engine.gfx.Assets;
 import engine.tiles.Tile;
+import engine.utils.Handler;
 
 public class WaterTile extends Tile
 {
-    public WaterTile(int ID)
+    public WaterTile(Handler handler, int ID)
     {
-        super(Assets.water, ID);
+        super(Assets.water, handler, ID);
     }
 
     @Override

@@ -2,14 +2,15 @@ package engine.tiles.solid;
 
 import engine.gfx.Assets;
 import engine.tiles.Tile;
+import engine.utils.Handler;
 
 import java.awt.image.BufferedImage;
 
 public class IceWallTile extends Tile
 {
-    public IceWallTile(int ID)
+    public IceWallTile(Handler handler, int ID)
     {
-        super(Assets.iceWall, ID);
+        super(Assets.iceWall, handler, ID);
         solid = true;
     }
 }

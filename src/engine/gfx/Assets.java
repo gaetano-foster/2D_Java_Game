@@ -16,9 +16,9 @@ public class Assets
             water, lava, stoneFloor, stoneWall,
             woodFloor, woodWall, sand, sandWall,
             ice, iceWall, obsidian, obsidianWall,
-            rock, rock1, tree, palm, woodItem, sandDune,
-            obsidianRock, obsidianShard, iceRock, iceCubes,
-            playerRight, playerLeft, playerDown, playerUp,
+            door, openDoor, rock, rock1, tree, palm, woodItem,
+            sandDune, obsidianRock, obsidianShard, iceRock,
+            iceCubes, doorItem, playerRight, playerLeft, playerDown, playerUp,
             playerRightStepOne, playerLeftStepOne, playerDownStepOne, playerUpStepOne,
             playerRightStepTwo, playerLeftStepTwo, playerDownStepTwo, playerUpStepTwo,
             playerRightSwim, playerLeftSwim, playerDownSwim, playerUpSwim,
@@ -62,6 +62,8 @@ public class Assets
         lava = tiles.crop(3, 0, size, size, size);
         obsidian = tiles.crop(4, 1, size, size, size);
         obsidianWall = tiles.crop(5, 1, size, size, size);
+        door = tiles.crop(6, 1, size, size, size);
+        openDoor = tiles.crop(7, 1, size, size, size);
         stoneFloor = tiles.crop(4, 0, size, size, size);
         stoneWall = tiles.crop(5, 0, size, size, size);
         woodFloor = tiles.crop(6, 0, size, size, size);
@@ -69,7 +71,7 @@ public class Assets
         sand = tiles.crop(8, 0, size, size, size);
         sandWall = tiles.crop(9, 0, size, size, size);
 
-        //static entities
+        //static entities & items
 
         rock = nonTileObjects.crop(0, 0, size, size, size);
         rock1 = nonTileObjects.crop(1, 0, size, size, size);
@@ -80,10 +82,8 @@ public class Assets
         iceRock = nonTileObjects.crop(7, 0, size, size, size);
         iceCubes = nonTileObjects.crop(8, 0, size, size, size);
         palm = nonTileObjects.crop(9, 0, size, size, size);
-
-        // items
-
         woodItem = nonTileObjects.crop(3, 0, size, size, size);
+        doorItem = nonTileObjects.crop(8, 1, size, size, size);
 
         // ui
 

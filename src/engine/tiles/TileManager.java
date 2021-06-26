@@ -6,22 +6,65 @@ import engine.utils.Handler;
 
 public class TileManager
 {
-    public static Tile[] tiles = new Tile[256];
+    private Handler handler;
 
-    public static Tile grassTile = new GrassTile(0);
-    public static Tile dirtTile = new DirtTile(1);
-    public static Tile stoneTile = new StoneFloorTile(2);
-    public static Tile stoneWallTile = new StoneWallTile(3);
-    public static Tile woodTile = new WoodFloorTile(4);
-    public static Tile woodWallTile = new WoodWallTile(5);
-    public static Tile waterTile = new WaterTile(6);
-    public static Tile lavaTile = new LavaTile(7);
-    public static Tile sandTile = new SandTile(8);
-    public static Tile grassWallTile = new GrassWallTile(9);
-    public static Tile dirtWallTile = new DirtWallTile(10);
-    public static Tile sandWallTile = new SandWallTile(11);
-    public static Tile iceTile = new IceTile(12);
-    public static Tile iceWallTile = new IceWallTile(13);
-    public static Tile obsidianTile = new ObsidianTile(14);
-    public static Tile obsidianWallTile = new ObsidianWallTile(15);
+    public Tile[] tiles;
+
+    public Tile grassTile;
+    public Tile dirtTile;
+    public Tile stoneTile;
+    public Tile stoneWallTile;
+    public Tile woodTile;
+    public Tile woodWallTile;
+    public Tile waterTile;
+    public Tile lavaTile;
+    public Tile sandTile;
+    public Tile grassWallTile;
+    public Tile dirtWallTile;
+    public Tile sandWallTile;
+    public Tile iceTile;
+    public Tile iceWallTile;
+    public Tile obsidianTile;
+    public Tile obsidianWallTile;
+    public Tile doorTile;
+    public Tile openDoorTile;
+
+    public TileManager()
+    {
+
+    }
+
+    public void reloadTiles()
+    {
+        tiles = new Tile[256];
+
+        grassTile = new GrassTile(handler,0);
+        dirtTile = new DirtTile(handler,1);
+        stoneTile = new StoneFloorTile(handler,2);
+        stoneWallTile = new StoneWallTile(handler,3);
+        woodTile = new WoodFloorTile(handler,4);
+        woodWallTile = new WoodWallTile(handler,5);
+        waterTile = new WaterTile(handler,6);
+        lavaTile = new LavaTile(handler,7);
+        sandTile = new SandTile(handler,8);
+        grassWallTile = new GrassWallTile(handler,9);
+        dirtWallTile = new DirtWallTile(handler,10);
+        sandWallTile = new SandWallTile(handler,11);
+        iceTile = new IceTile(handler,12);
+        iceWallTile = new IceWallTile(handler,13);
+        obsidianTile = new ObsidianTile(handler,14);
+        obsidianWallTile = new ObsidianWallTile(handler,15);
+        doorTile = new DoorTile(handler, 16);
+        openDoorTile = new OpenDoorTile(handler, 17);
+    }
+
+    public Handler getHandler()
+    {
+        return handler;
+    }
+
+    public void setHandler(Handler handler)
+    {
+        this.handler = handler;
+    }
 }

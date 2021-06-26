@@ -1,6 +1,7 @@
 package engine.entities.creatures;
 
 import engine.entities.Entity;
+import engine.gfx.Camera;
 import engine.inventory.CraftingInterface;
 import engine.inventory.Inventory;
 import engine.items.ItemManager;
@@ -10,6 +11,7 @@ import engine.utils.Handler;
 import engine.gfx.Animation;
 import engine.gfx.Assets;
 
+import javax.annotation.processing.SupportedSourceVersion;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
@@ -31,6 +33,7 @@ public class Player extends Creature
     private CraftingInterface craftingInterface;
     private boolean canBuild = true;
     private boolean wall = false;
+    private boolean setPos = true;
 
     private long lastAttackTimer, attackCooldown = 400, attackTimer = attackCooldown;
 
@@ -85,7 +88,7 @@ public class Player extends Creature
 
         checkAttacks();
 
-        if (attacking || handler.getWorld().getTileID((int) (x), (int) (y)) == TileManager.waterTile.getID())
+        if (attacking || handler.getWorld().getTileID((int) (x), (int) (y)) == handler.getTileManager().waterTile.getID())
             speed = halfSpeed;
         else
             speed = startingSpeed;
@@ -196,6 +199,28 @@ public class Player extends Creature
             xMove = speed;
         }
 
+        if (handler.getKeyManager().keyJustDown(KeyEvent.VK_F))
+        {
+            int mouseX = (int) (handler.getMouseManager().getMouseX() + handler.getCamera().getxOffset()), mouseY = (int) (handler.getMouseManager().getMouseY() + handler.getCamera().getyOffset());
+            int a = mouseY - (int) (y + height / 2);
+            int b = mouseX - (int) (x + width / 2);
+            int aSQ = a * a;
+            int bSQ = b * b;
+
+            int distanceToPlayer = (int) Math.sqrt(aSQ + bSQ);
+
+            if (distanceToPlayer <= reach && distanceToPlayer >= Tile.SIZE)
+            {
+                Tile posTile = handler.getWorld().getTile(mouseX / Tile.SIZE, mouseY / Tile.SIZE);
+                int posTileID = posTile.getID();
+
+                if (posTileID == handler.getTileManager().doorTile.getID())
+                    handler.getWorld().setTile(mouseX / Tile.SIZE, mouseY / Tile.SIZE, handler.getTileManager().openDoorTile.getID());
+                else if (posTileID == handler.getTileManager().openDoorTile.getID())
+                    handler.getWorld().setTile(mouseX / Tile.SIZE, mouseY / Tile.SIZE, handler.getTileManager().doorTile.getID());
+            }
+        }
+
         if (handler.getMouseManager().isRightJustPressed())
         {
             int mouseX = (int) (handler.getMouseManager().getMouseX() + handler.getCamera().getxOffset()), mouseY = (int) (handler.getMouseManager().getMouseY() + handler.getCamera().getyOffset());
@@ -211,19 +236,21 @@ public class Player extends Creature
                 Tile posTile = handler.getWorld().getTile(mouseX / Tile.SIZE, mouseY / Tile.SIZE);
                 int posTileID = posTile.getID();
 
-                if (posTileID == TileManager.waterTile.getID() || posTileID == TileManager.lavaTile.getID())
+                if (posTileID == handler.getTileManager().waterTile.getID() || posTileID == handler.getTileManager().lavaTile.getID())
                     return;
 
-                if (posTileID == TileManager.woodTile.getID() || posTileID == TileManager.woodWallTile.getID())
+                if (posTileID == handler.getTileManager().woodTile.getID() || posTileID == handler.getTileManager().woodWallTile.getID())
                     inventory.addItem(ItemManager.woodItem.createNew(1));
-                else if (posTileID == TileManager.stoneTile.getID() || posTileID == TileManager.stoneWallTile.getID())
+                else if (posTileID == handler.getTileManager().stoneTile.getID() || posTileID == handler.getTileManager().stoneWallTile.getID())
                     inventory.addItem(ItemManager.rockItem.createNew(1));
-                else if (posTileID == TileManager.sandTile.getID() || posTileID == TileManager.sandWallTile.getID())
+                else if (posTileID == handler.getTileManager().sandTile.getID() || posTileID == handler.getTileManager().sandWallTile.getID())
                     inventory.addItem(ItemManager.sandItem.createNew(1));
-                else if (posTileID == TileManager.iceTile.getID() || posTileID == TileManager.iceWallTile.getID())
+                else if (posTileID == handler.getTileManager().iceTile.getID() || posTileID == handler.getTileManager().iceWallTile.getID())
                     inventory.addItem(ItemManager.iceItem.createNew(1));
-                else if (posTileID == TileManager.obsidianTile.getID() || posTileID == TileManager.obsidianWallTile.getID())
+                else if (posTileID == handler.getTileManager().obsidianTile.getID() || posTileID == handler.getTileManager().obsidianWallTile.getID())
                     inventory.addItem(ItemManager.obsidianItem.createNew(1));
+                else if (posTileID == handler.getTileManager().doorTile.getID() || posTileID == handler.getTileManager().openDoorTile.getID())
+                    inventory.addItem(ItemManager.doorItem.createNew(1));
 
                 handler.getWorld().setTile(mouseX / Tile.SIZE, mouseY / Tile.SIZE, handler.getWorld().getBelowTile(mouseX / Tile.SIZE, mouseY / Tile.SIZE).getID());
                 handler.getWorld().setBelowTile(mouseX / Tile.SIZE, mouseY / Tile.SIZE, handler.getWorld().getDefBelowTile(mouseX / Tile.SIZE, mouseY / Tile.SIZE).getID());
@@ -242,12 +269,12 @@ public class Player extends Creature
 
                 int distanceToPlayer = (int) Math.sqrt(aSQ + bSQ);
 
-                if (distanceToPlayer <= reach && distanceToPlayer > Tile.SIZE && handler.getWorld().getTile(mouseX / Tile.SIZE, mouseY / Tile.SIZE).getID() != blockType && canBuild)
+                if (distanceToPlayer <= reach && distanceToPlayer > Tile.SIZE && handler.getWorld().getTile(mouseX / Tile.SIZE, mouseY / Tile.SIZE).getID() != blockType && canBuild && !handler.getWorld().getTile(mouseX / Tile.SIZE, mouseY / Tile.SIZE).isSolid() && handler.getWorld().getTile(mouseX / Tile.SIZE, mouseY / Tile.SIZE).getID() != handler.getTileManager().openDoorTile.getID())
                 {
                     int posTileID = handler.getWorld().getTile(mouseX / Tile.SIZE, mouseY / Tile.SIZE).getID();
 
-                    handler.getWorld().setTile(mouseX / Tile.SIZE, mouseY / Tile.SIZE, blockType);
                     handler.getWorld().setBelowTile(mouseX / Tile.SIZE, mouseY / Tile.SIZE, posTileID);
+                    handler.getWorld().setTile(mouseX / Tile.SIZE, mouseY / Tile.SIZE, blockType);
                     inventory.getActiveItem().setCount(inventory.getActiveItem().getCount() - 1);
                 }
             }
@@ -255,43 +282,49 @@ public class Player extends Creature
             if (inventory.getActiveItem().getID() == ItemManager.woodItem.getID() && inventory.getActiveItem().getCount() > 0)
             {
                 if (wall)
-                    blockType = TileManager.woodWallTile.getID();
+                    blockType = handler.getTileManager().woodWallTile.getID();
                 else
-                    blockType = TileManager.woodTile.getID();
+                    blockType = handler.getTileManager().woodTile.getID();
                 canBuild = true;
             }
             else if (inventory.getActiveItem().getID() == ItemManager.rockItem.getID() && inventory.getActiveItem().getCount() > 0)
             {
                 if (wall)
-                    blockType = TileManager.stoneWallTile.getID();
+                    blockType = handler.getTileManager().stoneWallTile.getID();
                 else
-                    blockType = TileManager.stoneTile.getID();
+                    blockType = handler.getTileManager().stoneTile.getID();
                 canBuild = true;
             }
             else if (inventory.getActiveItem().getID() == ItemManager.sandItem.getID() && inventory.getActiveItem().getCount() > 0)
             {
                 if (wall)
-                    blockType = TileManager.sandWallTile.getID();
+                    blockType = handler.getTileManager().sandWallTile.getID();
                 else
-                    blockType = TileManager.sandTile.getID();
+                    blockType = handler.getTileManager().sandTile.getID();
                 canBuild = true;
             }
             else if (inventory.getActiveItem().getID() == ItemManager.obsidianItem.getID() && inventory.getActiveItem().getCount() > 0)
             {
                 if (wall)
-                    blockType = TileManager.obsidianWallTile.getID();
+                    blockType = handler.getTileManager().obsidianWallTile.getID();
                 else
-                    blockType = TileManager.obsidianTile.getID();
+                    blockType = handler.getTileManager().obsidianTile.getID();
                 canBuild = true;
             }
             else if (inventory.getActiveItem().getID() == ItemManager.iceItem.getID() && inventory.getActiveItem().getCount() > 0)
             {
                 if (wall)
-                    blockType = TileManager.iceWallTile.getID();
+                    blockType = handler.getTileManager().iceWallTile.getID();
                 else
-                    blockType = TileManager.iceTile.getID();
+                    blockType = handler.getTileManager().iceTile.getID();
                 canBuild = true;
-            } else if (inventory.getActiveItem().getID() == ItemManager.obsidianShardItem.getID() && inventory.getActiveItem().getCount() > 0)
+            }
+            else if (inventory.getActiveItem().getID() == ItemManager.doorItem.getID() && inventory.getActiveItem().getCount() > 0)
+            {
+                blockType = handler.getTileManager().doorTile.getID();
+                canBuild = true;
+            }
+            else if (inventory.getActiveItem().getID() == ItemManager.obsidianShardItem.getID() && inventory.getActiveItem().getCount() > 0)
             {
                 canBuild = false;
             }

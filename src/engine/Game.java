@@ -3,6 +3,7 @@ package engine;
 import engine.display.Display;
 import engine.items.Item;
 import engine.tiles.Tile;
+import engine.tiles.TileManager;
 import engine.utils.Handler;
 import engine.gfx.Assets;
 import engine.gfx.Camera;
@@ -33,6 +34,8 @@ public class Game implements Runnable
     private Camera camera;
     private Handler handler;
 
+    private TileManager tileManager;
+
     public State gameState;
     public State menuState;
 
@@ -55,8 +58,11 @@ public class Game implements Runnable
         display.getCanvas().addMouseMotionListener(mouseManager);
         Assets.load();
 
+        tileManager = new TileManager();
         handler = new Handler(this);
         camera = new Camera(handler, 0, 0);
+        tileManager.setHandler(handler);
+        tileManager.reloadTiles();
 
         gameState = new GameState(handler);
         menuState = new MenuState(handler);
@@ -189,4 +195,8 @@ public class Game implements Runnable
         return mouseManager;
     }
 
+    public TileManager getTileManager()
+    {
+        return tileManager;
+    }
 }
