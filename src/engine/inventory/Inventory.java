@@ -37,6 +37,8 @@ public class Inventory
             addItem(ItemManager.woodItem.createNew(64));
             addItem(ItemManager.rockItem.createNew(64));
             addItem(ItemManager.sandItem.createNew(64));
+            addItem(ItemManager.glassItem.createNew(64));
+            addItem(ItemManager.coalItem.createNew(64));
         }
     }
 

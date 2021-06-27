@@ -9,7 +9,6 @@ import engine.utils.Handler;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.ConcurrentModificationException;
 
 public class CraftingInterface
 {
@@ -31,15 +30,13 @@ public class CraftingInterface
         recipesList.add(new CraftingRecipe(ItemManager.iceCubeItem.createNew(2), ItemManager.iceCubeItem.createNew(2), ItemManager.iceItem.createNew(1)));
         recipesList.add(new CraftingRecipe(ItemManager.obsidianShardItem.createNew(2), ItemManager.obsidianShardItem.createNew(2), ItemManager.obsidianItem.createNew(1)));
         recipesList.add(new CraftingRecipe(ItemManager.woodItem.createNew(3), ItemManager.woodItem.createNew(3), ItemManager.doorItem.createNew(3)));
+        recipesList.add(new CraftingRecipe(ItemManager.coalItem.createNew(1), ItemManager.sandItem.createNew(1), ItemManager.glassItem.createNew(1)));
     }
 
     public void update()
     {
         if (handler.getKeyManager().keyJustDown(KeyEvent.VK_R))
             active = !active;
-
-        if (active)
-            inventory.setActive(true);
 
         if (!active)
             return;
@@ -59,7 +56,6 @@ public class CraftingInterface
 
     public void craft(CraftingRecipe recipe)
     {
-        boolean canCraft = false;
         Item item = null;
         Item item2 = null;
 
@@ -71,7 +67,6 @@ public class CraftingInterface
                 {
                     if (t.getID() == recipe.getItem2().getID() && t.getCount() >= recipe.getItem2().getCount())
                     {
-                        canCraft = true;
                         item = i;
                         item2 = t;
                         break;

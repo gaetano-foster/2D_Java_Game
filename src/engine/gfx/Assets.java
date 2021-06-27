@@ -16,18 +16,19 @@ public class Assets
             water, lava, stoneFloor, stoneWall,
             woodFloor, woodWall, sand, sandWall,
             ice, iceWall, obsidian, obsidianWall,
-            door, openDoor, rock, rock1, tree, palm, woodItem,
-            sandDune, obsidianRock, obsidianShard, iceRock,
-            iceCubes, doorItem, playerRight, playerLeft, playerDown, playerUp,
-            playerRightStepOne, playerLeftStepOne, playerDownStepOne, playerUpStepOne,
-            playerRightStepTwo, playerLeftStepTwo, playerDownStepTwo, playerUpStepTwo,
-            playerRightSwim, playerLeftSwim, playerDownSwim, playerUpSwim,
-            playerRightPunch, playerLeftPunch, playerDownPunch, playerUpPunch,
-            trollRight, trollLeft, trollDown, trollUp,
+            door, openDoor, glass, furnace, litFurnace,
+            rock, rock1, coalOre, tree, palm, woodItem, sandDune,
+            obsidianRock, obsidianShard, iceRock, iceCubes, coal,
+            doorItem, playerRight, playerLeft, playerDown, playerUp,
+            playerRightStepOne, playerLeftStepOne, playerDownStepOne,
+            playerUpStepOne, playerRightStepTwo, playerLeftStepTwo, playerDownStepTwo,
+            playerUpStepTwo, playerRightSwim, playerLeftSwim, playerDownSwim,
+            playerUpSwim, playerRightPunch, playerLeftPunch, playerDownPunch,
+            playerUpPunch, trollRight, trollLeft, trollDown, trollUp,
             trollRightStepOne, trollLeftStepOne, trollDownStepOne, trollUpStepOne,
             trollRightStepTwo, trollLeftStepTwo, trollDownStepTwo, trollUpStepTwo,
             play, playHighlight, option, optionHighlight, quit, quitHighlight,
-            inventoryScreen, craftingScreen, activeItemHolder;
+            inventoryScreen, craftingScreen, furnaceScreen, activeItemHolder;
 
     public static BufferedImage[] player_down;
     public static BufferedImage[] player_up;
@@ -70,6 +71,9 @@ public class Assets
         woodWall = tiles.crop(7, 0, size, size, size);
         sand = tiles.crop(8, 0, size, size, size);
         sandWall = tiles.crop(9, 0, size, size, size);
+        glass = tiles.crop(8, 1, size, size, size);
+        furnace = tiles.crop(9, 1, size, size, size);
+        litFurnace = tiles.crop(0, 2, size, size, size);
 
         //static entities & items
 
@@ -84,6 +88,8 @@ public class Assets
         palm = nonTileObjects.crop(9, 0, size, size, size);
         woodItem = nonTileObjects.crop(3, 0, size, size, size);
         doorItem = nonTileObjects.crop(8, 1, size, size, size);
+        coalOre = nonTileObjects.crop(9, 1, size, size, size);
+        coal = nonTileObjects.crop(8, 2, size, size, size);
 
         // ui
 

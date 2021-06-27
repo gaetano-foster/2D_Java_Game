@@ -21,6 +21,8 @@ public class ItemManager
     public static Item iceItem = new Item(Assets.iceRock, "Ice", 5);
     public static Item obsidianItem = new Item(Assets.obsidianRock, "Obsidian", 6);
     public static Item doorItem = new Item(Assets.doorItem, "Door", 7);
+    public static Item coalItem = new Item(Assets.coal, "Coal", 8);
+    public static Item glassItem = new Item(Assets.glass, "Glass", 9);
 
     // rest
 

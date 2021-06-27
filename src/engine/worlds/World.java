@@ -28,7 +28,10 @@ public class World
     private static int[][] defBelowChunk;
     private Random random = new Random();
     private FastNoiseLite noise = new FastNoiseLite();
-
+    int xStart;
+    int xEnd;
+    int yStart;
+    int yEnd;
     private EntityManager entityManager;
     private ItemManager itemManager;
 
@@ -45,6 +48,11 @@ public class World
         entityManager.getPlayer().setX(spawnX);
         entityManager.getPlayer().setY(spawnY);
         entityManager.addEntity(new Troll(handler, 20 * Tile.SIZE, 20 * Tile.SIZE, Tile.SIZE, Tile.SIZE));
+
+        xStart = (int) Math.max(0, handler.getCamera().getxOffset() / Tile.SIZE);
+        xEnd = (int) Math.min(width, (handler.getCamera().getxOffset() + handler.getWidth()) / Tile.SIZE + 1);
+        yStart = (int) Math.max(0, handler.getCamera().getyOffset() / Tile.SIZE);
+        yEnd = (int) Math.min(height, (handler.getCamera().getyOffset() + handler.getHeight()) / Tile.SIZE + 1);
     }
 
     public World(Handler handler)
@@ -64,30 +72,39 @@ public class World
 
     public void update()
     {
+        xStart = (int) Math.max(0, handler.getCamera().getxOffset() / Tile.SIZE);
+        xEnd = (int) Math.min(width, (handler.getCamera().getxOffset() + handler.getWidth()) / Tile.SIZE + 1);
+        yStart = (int) Math.max(0, handler.getCamera().getyOffset() / Tile.SIZE);
+        yEnd = (int) Math.min(height, (handler.getCamera().getyOffset() + handler.getHeight()) / Tile.SIZE + 1);
         itemManager.update();
         entityManager.update();
-    }
-
-    public void render(Graphics g)
-    {
-        int xStart = (int) Math.max(0, handler.getCamera().getxOffset() / Tile.SIZE);
-        int xEnd = (int) Math.min(width, (handler.getCamera().getxOffset() + handler.getWidth()) / Tile.SIZE + 1);
-        int yStart = (int) Math.max(0, handler.getCamera().getyOffset() / Tile.SIZE);
-        int yEnd = (int) Math.min(height, (handler.getCamera().getyOffset() + handler.getHeight()) / Tile.SIZE + 1);
 
         for (int y = yStart; y < yEnd; y++)
         {
             for (int x = xStart; x < xEnd; x++)
             {
-                if (!handler.getTileManager().tiles[chunk[x][y]].isTransparent())
+                if (handler.getTileManager().tiles[chunk[x][y]].isTransparent())
                 {
-                    getTile(x, y).render(g, (int) (x * Tile.SIZE - handler.getCamera().getxOffset()), (int) (y * Tile.SIZE - handler.getCamera().getyOffset()));
+                    getBelowTile(x, y).update();
                 }
-                else
+
+                getTile(x, y).update();
+            }
+        }
+    }
+
+    public void render(Graphics g)
+    {
+        for (int y = yStart; y < yEnd; y++)
+        {
+            for (int x = xStart; x < xEnd; x++)
+            {
+                if (handler.getTileManager().tiles[chunk[x][y]].isTransparent())
                 {
                     getBelowTile(x, y).render(g, (int) (x * Tile.SIZE - handler.getCamera().getxOffset()), (int) (y * Tile.SIZE - handler.getCamera().getyOffset()));
-                    getTile(x, y).render(g, (int) (x * Tile.SIZE - handler.getCamera().getxOffset()), (int) (y * Tile.SIZE - handler.getCamera().getyOffset()));
                 }
+
+                getTile(x, y).render(g, (int) (x * Tile.SIZE - handler.getCamera().getxOffset()), (int) (y * Tile.SIZE - handler.getCamera().getyOffset()));
             }
         }
 
@@ -185,16 +202,19 @@ public class World
 
                 if (noiseValue > 0.4f && noiseValue < 0.8f)
                     noiseValue = 8;
+                else if (noiseValue < .3 && noiseValue > 0.0000000000000000000000000000000000000001)
+                    noiseValue = 2;
+                else if (noiseValue > 0.0000000000000000000000000000000001f && noiseValue < 0.4f)
+                    noiseValue = 0;
                 else if (noiseValue > 0.8f)
                     noiseValue = 6;
-                else
-                    noiseValue = 0;
+
 
                 chunk[x][y] = (int)noiseValue;
                 if (noiseValue == 6)
                 {
-                    belowChunk[x][y] = 6;
-                    defBelowChunk[x][y] = 6;
+                    belowChunk[x][y] = 8;
+                    defBelowChunk[x][y] = 8;
                 }
                 else
                 {
@@ -250,6 +270,12 @@ public class World
                     boolean exists = random.nextBoolean();
                     if (exists)
                         entityManager.addEntity(new GreyRock(handler, x * Tile.SIZE, y * Tile.SIZE, Tile.SIZE, Tile.SIZE));
+                }
+                if (chunk[x][y] == 2)
+                {
+                    boolean exists = random.nextBoolean();
+                    if (exists)
+                        entityManager.addEntity(new CoalOre(handler, x * Tile.SIZE, y * Tile.SIZE, Tile.SIZE, Tile.SIZE));
                 }
             }
         }

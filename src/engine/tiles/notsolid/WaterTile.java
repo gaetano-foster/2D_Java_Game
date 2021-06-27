@@ -9,6 +9,7 @@ public class WaterTile extends Tile
     public WaterTile(Handler handler, int ID)
     {
         super(Assets.water, handler, ID);
+        transparent = true;
     }
 
     @Override

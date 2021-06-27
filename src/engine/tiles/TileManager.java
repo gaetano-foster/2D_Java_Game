@@ -28,6 +28,8 @@ public class TileManager
     public Tile obsidianWallTile;
     public Tile doorTile;
     public Tile openDoorTile;
+    public Tile glassTile;
+
 
     public TileManager()
     {
@@ -56,6 +58,7 @@ public class TileManager
         obsidianWallTile = new ObsidianWallTile(handler,15);
         doorTile = new DoorTile(handler, 16);
         openDoorTile = new OpenDoorTile(handler, 17);
+        glassTile = new GlassTile(handler, 18);
     }
 
     public Handler getHandler()

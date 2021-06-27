@@ -1,17 +1,14 @@
 package engine.entities.creatures;
 
 import engine.entities.Entity;
-import engine.gfx.Camera;
 import engine.inventory.CraftingInterface;
 import engine.inventory.Inventory;
 import engine.items.ItemManager;
 import engine.tiles.Tile;
-import engine.tiles.TileManager;
 import engine.utils.Handler;
 import engine.gfx.Animation;
 import engine.gfx.Assets;
 
-import javax.annotation.processing.SupportedSourceVersion;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
@@ -122,7 +119,7 @@ public class Player extends Creature
             attacking = false;
         }
 
-        if (inventory.isActive())
+        if (inventory.isActive() || craftingInterface.isActive())
             return;
 
         Rectangle cb = getCollisionBounds(0,0);
@@ -179,8 +176,16 @@ public class Player extends Creature
         xMove = 0;
         yMove = 0;
 
-        if (inventory.isActive())
+        if (inventory.isActive() || craftingInterface.isActive())
+        {
+            if (handler.getKeyManager().keyJustDown(KeyEvent.VK_ESCAPE))
+            {
+                craftingInterface.setActive(false);
+                inventory.setActive(false);
+            }
+
             return;
+        }
 
         if(handler.getKeyManager().up)
         {
@@ -324,7 +329,16 @@ public class Player extends Creature
                 blockType = handler.getTileManager().doorTile.getID();
                 canBuild = true;
             }
+            else if (inventory.getActiveItem().getID() == ItemManager.glassItem.getID() && inventory.getActiveItem().getCount() > 0)
+            {
+                blockType = handler.getTileManager().glassTile.getID();
+                canBuild = true;
+            }
             else if (inventory.getActiveItem().getID() == ItemManager.obsidianShardItem.getID() && inventory.getActiveItem().getCount() > 0)
+            {
+                canBuild = false;
+            }
+            else if (inventory.getActiveItem().getID() == ItemManager.coalItem.getID() && inventory.getActiveItem().getCount() > 0)
             {
                 canBuild = false;
             }
@@ -349,6 +363,9 @@ public class Player extends Creature
     @Override
     public void render(Graphics g)
     {
+        if (inventory.isActive() || craftingInterface.isActive())
+            return;
+
         if (!attacking)
             g.drawImage(getCurrentAnimationFrame(), (int) (x - handler.getCamera().getxOffset()), (int) (y - handler.getCamera().getyOffset()), width, height, null);
         else if (attacking && direction == 0)
