@@ -11,6 +11,7 @@ public class SandDune extends StaticEntity
     public SandDune(Handler handler, float x, float y, int width, int height)
     {
         super(handler, x, y, width, height);
+        setMaxHealth(2);
     }
 
     @Override

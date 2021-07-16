@@ -17,12 +17,16 @@ public class ItemManager
     public static Item rockItem = new Item(Assets.rock, "Rock", 1);
     public static Item sandItem = new Item(Assets.sandDune, "Sand", 2);
     public static Item iceCubeItem = new Item(Assets.iceCubes, "Ice Cube", 3);
-    public static Item obsidianShardItem = new Item(Assets.obsidianShard, "Obsidian Shard", 4);
+    public static Item obsidianShardItem = new Item(Assets.obsidianShard, "Obsidian Shard", 4, 2);
     public static Item iceItem = new Item(Assets.iceRock, "Ice", 5);
     public static Item obsidianItem = new Item(Assets.obsidianRock, "Obsidian", 6);
     public static Item doorItem = new Item(Assets.doorItem, "Door", 7);
     public static Item coalItem = new Item(Assets.coal, "Coal", 8);
     public static Item glassItem = new Item(Assets.glass, "Glass", 9);
+    public static Item swordItem = new Item(Assets.sword, "Sword", 10, 7, false);
+    public static Item rawIronItem = new Item(Assets.rawIron, "Raw Iron", 11);
+    public static Item ironItem = new Item(Assets.iron, "Iron", 12);
+    public static Item stickItem = new Item(Assets.stick, "Stick", 13, 1);
 
     // rest
 
@@ -41,7 +45,8 @@ public class ItemManager
         while(it.hasNext())
         {
             Item i = it.next();
-            i.update();
+            if (i.getX() - handler.getCamera().getxOffset() > -16 && i.getY() - handler.getCamera().getyOffset() > -16 && i.getX() - handler.getCamera().getxOffset() < handler.getGame().getWidth() && i.getY() - handler.getCamera().getyOffset() < handler.getGame().getHeight())
+                i.update();
             if (i.isPickedUp())
                 it.remove();
         }
@@ -50,7 +55,10 @@ public class ItemManager
     public void render(Graphics g)
     {
         for (Item i : itemsList)
-            i.render(g);
+        {
+            if (i.getX() - handler.getCamera().getxOffset() > -16 && i.getY() - handler.getCamera().getyOffset() > -16 && i.getX() - handler.getCamera().getxOffset() < handler.getGame().getWidth() && i.getY() - handler.getCamera().getyOffset() < handler.getGame().getHeight())
+                i.render(g);
+        }
     }
 
     public void addItem(Item i)

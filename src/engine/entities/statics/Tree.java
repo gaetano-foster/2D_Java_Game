@@ -16,6 +16,7 @@ public class Tree extends StaticEntity
         super(handler, x, y, width, height);
         bounds.y = 35;
         bounds.height /= 4;
+        setMaxHealth(8);
     }
 
     @Override

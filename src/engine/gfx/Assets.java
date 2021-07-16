@@ -14,12 +14,12 @@ public class Assets
     public static BufferedImage
             grass, grassWall, dirt, dirtWall,
             water, lava, stoneFloor, stoneWall,
-            woodFloor, woodWall, sand, sandWall,
+            woodFloor, woodWall, stick, sand, sandWall,
             ice, iceWall, obsidian, obsidianWall,
             door, openDoor, glass, furnace, litFurnace,
-            rock, rock1, coalOre, tree, palm, woodItem, sandDune,
-            obsidianRock, obsidianShard, iceRock, iceCubes, coal,
-            doorItem, playerRight, playerLeft, playerDown, playerUp,
+            rock, rock1, coalOre, ironOre, tree, palm, woodItem, sandDune,
+            obsidianRock, obsidianShard, iceRock, iceCubes, coal, rawIron,
+            iron, doorItem, sword, playerRight, playerLeft, playerDown, playerUp,
             playerRightStepOne, playerLeftStepOne, playerDownStepOne,
             playerUpStepOne, playerRightStepTwo, playerLeftStepTwo, playerDownStepTwo,
             playerUpStepTwo, playerRightSwim, playerLeftSwim, playerDownSwim,
@@ -90,6 +90,11 @@ public class Assets
         doorItem = nonTileObjects.crop(8, 1, size, size, size);
         coalOre = nonTileObjects.crop(9, 1, size, size, size);
         coal = nonTileObjects.crop(8, 2, size, size, size);
+        ironOre = nonTileObjects.crop(4, 3, size, size, size);
+        rawIron = nonTileObjects.crop(5, 3, size, size, size);
+        iron = nonTileObjects.crop(6, 3, size, size, size);
+        stick = nonTileObjects.crop(7, 3, size, size, size);
+        sword = nonTileObjects.crop(9, 2, size, size, size);
 
         // ui
 

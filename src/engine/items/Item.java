@@ -10,15 +10,14 @@ import java.awt.image.BufferedImage;
 
 public class Item
 {
-
-    // class
-
     public static final int ITEM_SIZE = 25;
 
     protected Handler handler;
     protected BufferedImage texture;
     protected String name;
     protected final int ID;
+    protected int damage;
+    protected boolean stackable;
 
     protected Rectangle bounds;
 
@@ -30,6 +29,50 @@ public class Item
         this.texture = texture;
         this.name = name;
         this.ID = ID;
+        damage = 0;
+        stackable = true;
+        count = 1;
+
+        bounds = new Rectangle(x, y, ITEM_SIZE, ITEM_SIZE);
+
+        ItemManager.items[ID] = this;
+    }
+
+    public Item(BufferedImage texture, String name, int ID, int damage)
+    {
+        this.texture = texture;
+        this.name = name;
+        this.ID = ID;
+        this.damage = damage;
+        stackable = true;
+        count = 1;
+
+        bounds = new Rectangle(x, y, ITEM_SIZE, ITEM_SIZE);
+
+        ItemManager.items[ID] = this;
+    }
+
+    public Item(BufferedImage texture, String name, int ID, boolean stackable)
+    {
+        this.texture = texture;
+        this.name = name;
+        this.ID = ID;
+        this.stackable = stackable;
+        damage = 0;
+        count = 1;
+
+        bounds = new Rectangle(x, y, ITEM_SIZE, ITEM_SIZE);
+
+        ItemManager.items[ID] = this;
+    }
+
+    public Item(BufferedImage texture, String name, int ID, int damage, boolean stackable)
+    {
+        this.texture = texture;
+        this.name = name;
+        this.ID = ID;
+        this.damage = damage;
+        this.stackable = stackable;
         count = 1;
 
         bounds = new Rectangle(x, y, ITEM_SIZE, ITEM_SIZE);
@@ -75,7 +118,7 @@ public class Item
 
     public Item createNew(int count)
     {
-        Item i = new Item(texture, name, ID);
+        Item i = new Item(texture, name, ID, damage, stackable);
         i.setPickedUp(true);
         i.setCount(count);
         return i;
@@ -83,14 +126,14 @@ public class Item
 
     public Item createNew(int x, int y)
     {
-        Item i = new Item(texture, name, ID);
+        Item i = new Item(texture, name, ID, damage);
         i.setPosition(x, y);
         return i;
     }
 
     public Item createNew(int x, int y, int count)
     {
-        Item i = new Item(texture, name, ID);
+        Item i = new Item(texture, name, ID, damage);
         i.setPosition(x, y);
         i.setCount(count);
         return i;
@@ -177,5 +220,15 @@ public class Item
     public void setPickedUp(boolean pickedUp)
     {
         this.pickedUp = pickedUp;
+    }
+
+    public boolean isStackable()
+    {
+        return stackable;
+    }
+
+    public int getDamage()
+    {
+        return damage;
     }
 }

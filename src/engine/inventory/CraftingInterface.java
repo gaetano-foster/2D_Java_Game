@@ -30,7 +30,10 @@ public class CraftingInterface
         recipesList.add(new CraftingRecipe(ItemManager.iceCubeItem.createNew(2), ItemManager.iceCubeItem.createNew(2), ItemManager.iceItem.createNew(1)));
         recipesList.add(new CraftingRecipe(ItemManager.obsidianShardItem.createNew(2), ItemManager.obsidianShardItem.createNew(2), ItemManager.obsidianItem.createNew(1)));
         recipesList.add(new CraftingRecipe(ItemManager.woodItem.createNew(3), ItemManager.woodItem.createNew(3), ItemManager.doorItem.createNew(3)));
-        recipesList.add(new CraftingRecipe(ItemManager.coalItem.createNew(1), ItemManager.sandItem.createNew(1), ItemManager.glassItem.createNew(1)));
+        recipesList.add(new CraftingRecipe(ItemManager.sandItem.createNew(1), ItemManager.coalItem.createNew(1), ItemManager.glassItem.createNew(1)));
+        recipesList.add(new CraftingRecipe(ItemManager.rawIronItem.createNew(3), ItemManager.coalItem.createNew(1), ItemManager.ironItem.createNew(1)));
+        recipesList.add(new CraftingRecipe(ItemManager.woodItem.createNew(1), ItemManager.woodItem.createNew(1), ItemManager.stickItem.createNew(4)));
+        recipesList.add(new CraftingRecipe(ItemManager.stickItem.createNew(1), ItemManager.ironItem.createNew(2), ItemManager.swordItem.createNew(1)));
     }
 
     public void update()

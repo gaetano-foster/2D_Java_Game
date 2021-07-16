@@ -13,6 +13,7 @@ public class GreyRock extends StaticEntity
     public GreyRock(Handler handler, float x, float y, int width, int height)
     {
         super(handler, x, y, width, height);
+        setMaxHealth(20);
     }
 
     @Override

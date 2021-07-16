@@ -13,6 +13,7 @@ public class BrownRock extends StaticEntity
     public BrownRock(Handler handler, float x, float y, int width, int height)
     {
         super(handler, x, y, width, height);
+        setMaxHealth(16);
     }
 
     @Override
@@ -23,7 +24,10 @@ public class BrownRock extends StaticEntity
         if (amt < 1)
             amt = 1;
 
-        handler.getWorld().getItemManager().addItem(ItemManager.rockItem.createNew((int)(x), (int)(y), amt));
+        if (Math.random() > 0.99)
+            handler.getWorld().getItemManager().addItem(ItemManager.rawIronItem.createNew((int)(x), (int)(y), amt));
+        else
+            handler.getWorld().getItemManager().addItem(ItemManager.rockItem.createNew((int)(x), (int)(y), amt));
     }
 
     @Override

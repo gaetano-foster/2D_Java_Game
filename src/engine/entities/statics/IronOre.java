@@ -7,12 +7,12 @@ import engine.utils.Handler;
 import java.awt.*;
 import java.util.Random;
 
-public class CoalOre extends StaticEntity
+public class IronOre extends StaticEntity
 {
-    public CoalOre(Handler handler, float x, float y, int width, int height)
+    public IronOre(Handler handler, float x, float y, int width, int height)
     {
         super(handler, x, y, width, height);
-        setMaxHealth(26);
+        setMaxHealth(36);
     }
 
     @Override
@@ -23,7 +23,7 @@ public class CoalOre extends StaticEntity
         if (amt < 1)
             amt = 1;
 
-        handler.getWorld().getItemManager().addItem(ItemManager.coalItem.createNew((int)(x), (int)(y), amt));
+        handler.getWorld().getItemManager().addItem(ItemManager.rawIronItem.createNew((int)(x), (int)(y), amt));
     }
 
     @Override
@@ -35,6 +35,6 @@ public class CoalOre extends StaticEntity
     @Override
     public void render(Graphics g)
     {
-        g.drawImage(Assets.coalOre, (int) (x - handler.getCamera().getxOffset()), (int) (y - handler.getCamera().getyOffset()), width, height, null);
+        g.drawImage(Assets.ironOre, (int) (x - handler.getCamera().getxOffset()), (int) (y - handler.getCamera().getyOffset()), width, height, null);
     }
 }

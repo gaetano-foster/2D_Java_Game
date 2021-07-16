@@ -27,18 +27,23 @@ public class Inventory
         inventoryItems = new ArrayList<Item>();
         y = handler.getGame().getHeight() - 1;
         debug = debugMode;
+        activeItem = null;
         if (debug)
         {
-            addItem(ItemManager.iceCubeItem.createNew(64));
-            addItem(ItemManager.obsidianShardItem.createNew(64));
-            addItem(ItemManager.iceItem.createNew(64));
-            addItem(ItemManager.obsidianItem.createNew(64));
-            addItem(ItemManager.doorItem.createNew(64));
-            addItem(ItemManager.woodItem.createNew(64));
-            addItem(ItemManager.rockItem.createNew(64));
-            addItem(ItemManager.sandItem.createNew(64));
-            addItem(ItemManager.glassItem.createNew(64));
-            addItem(ItemManager.coalItem.createNew(64));
+            for (int i = 0; i < ItemManager.items.length; i++)
+            {
+                if (ItemManager.items[i] != null)
+                {
+                    if (ItemManager.items[i].isStackable())
+                        inventoryItems.add(ItemManager.items[i].createNew(64));
+                    else
+                        inventoryItems.add(ItemManager.items[i].createNew(1));
+                }
+                else
+                {
+                    break;
+                }
+            }
         }
     }
 
@@ -54,8 +59,7 @@ public class Inventory
                 activeItem = inventoryItems.get(selectedItem);
             else
                 activeItem = null;
-        }
-        catch (IndexOutOfBoundsException e)
+        } catch (IndexOutOfBoundsException e)
         {
             System.out.println("no");
         }
@@ -128,8 +132,7 @@ public class Inventory
             if (i == 0)
             {
                 Text.drawString(g, "> " + inventoryItems.get(selectedItem + i).getName() + " <", listCenterX, listCenterY + i * (12 * ((handler.getGame().getHeight()) - 20) / 148), false, Color.YELLOW, Assets.font56);
-            }
-            else
+            } else
             {
                 Text.drawString(g, "  " + inventoryItems.get(selectedItem + i).getName(), listCenterX, listCenterY + i * (12 * ((handler.getGame().getHeight()) - 20) / 148), false, Color.BLACK, Assets.font56);
             }
@@ -145,12 +148,15 @@ public class Inventory
 
     public void addItem(Item item)
     {
-        for (Item i : inventoryItems)
+        if (item.isStackable())
         {
-            if (i.getID() == item.getID())
+            for (Item i : inventoryItems)
             {
-                i.setCount(i.getCount() + item.getCount());
-                return;
+                if (i.getID() == item.getID())
+                {
+                    i.setCount(i.getCount() + item.getCount());
+                    return;
+                }
             }
         }
         inventoryItems.add(item);
@@ -192,5 +198,10 @@ public class Inventory
     public Item getActiveItem()
     {
         return activeItem;
+    }
+
+    public void setActiveItem(Item item)
+    {
+        activeItem = item;
     }
 }

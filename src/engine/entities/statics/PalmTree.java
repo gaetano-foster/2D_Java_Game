@@ -15,6 +15,7 @@ public class PalmTree extends StaticEntity
         super(handler, x, y, width, height);
         bounds.y = 35;
         bounds.height /= 4;
+        setMaxHealth(6);
     }
 
     @Override

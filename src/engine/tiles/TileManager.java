@@ -66,6 +66,11 @@ public class TileManager
         return handler;
     }
 
+    public Tile getTileByID(int id)
+    {
+        return tiles[id];
+    }
+
     public void setHandler(Handler handler)
     {
         this.handler = handler;

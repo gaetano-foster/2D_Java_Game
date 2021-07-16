@@ -35,7 +35,9 @@ public class EntityManager
         while(it.hasNext())
         {
             Entity e = it.next();
-            e.update();
+
+            if ((e.getX() - handler.getCamera().getxOffset() > -50 && e.getY() - handler.getCamera().getyOffset() > -50 && e.getX() - handler.getCamera().getxOffset() < handler.getGame().getWidth() && e.getY() - handler.getCamera().getyOffset() < handler.getGame().getHeight()) || e == handler.getPlayer())
+                e.update();
             if(!e.isActive())
             {
                 it.remove();
@@ -55,7 +57,8 @@ public class EntityManager
     {
         for (Entity e : entities)
         {
-            e.render(g);
+            if (e.getX() - handler.getCamera().getxOffset() > -50 && e.getY() - handler.getCamera().getyOffset() > -50 && e.getX() - handler.getCamera().getxOffset() < handler.getGame().getWidth() && e.getY() - handler.getCamera().getyOffset() < handler.getGame().getHeight())
+                e.render(g);
         }
         player.topRender(g);
     }

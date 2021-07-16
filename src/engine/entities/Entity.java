@@ -72,6 +72,7 @@ public abstract class Entity
     public void setMaxHealth(int maxHealth)
     {
         this.maxHealth = maxHealth;
+        this.health = this.maxHealth;
     }
 
     public abstract void die();

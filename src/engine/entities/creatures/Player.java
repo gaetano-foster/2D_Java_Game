@@ -22,6 +22,7 @@ public class Player extends Creature
     private int reach = 4 * Tile.SIZE;
     private BufferedImage def = Assets.playerRight;
     private float startingSpeed;
+    private int startingPower;
     private float startingStamina;
     private float halfSpeed;
     private boolean running = false;
@@ -31,6 +32,11 @@ public class Player extends Creature
     private boolean canBuild = true;
     private boolean wall = false;
     private boolean setPos = true;
+    private int baseDamage;
+    private int level = 1;
+    private int exp = 0;
+    private int totalKills;
+    private int requirement = 4;
 
     private long lastAttackTimer, attackCooldown = 400, attackTimer = attackCooldown;
 
@@ -38,7 +44,7 @@ public class Player extends Creature
     {
         super(handler, x, y, Creature.DEFAULT_WIDTH, Creature.DEFAULT_HEIGHT);
         setMaxHealth(20);
-        setPower(100);
+        setPower(1);
         setSpeed(4);
         bounds.x = 15;
         bounds.y = 20;
@@ -46,7 +52,9 @@ public class Player extends Creature
         bounds.height = 29;
         startingSpeed = speed;
         startingStamina = stamina;
+        startingPower = power;
         halfSpeed = speed / 2;
+        baseDamage = power;
 
         animUp = new Animation(100, Assets.player_up);
         animDown = new Animation(100, Assets.player_down);
@@ -66,13 +74,21 @@ public class Player extends Creature
     @Override
     public void update()
     {
-        try
-        {
-            getInput();
-        }
-        catch (IndexOutOfBoundsException e)
-        {
+        getInput();
 
+        if (inventory.getActiveItem() != null)
+            setPower(startingPower + level + inventory.getActiveItem().getDamage());
+        else
+            setPower(startingPower + level);
+
+        if (exp == requirement)
+        {
+            exp = 0;
+            level++;
+            requirement += requirement / (requirement / 2);
+            System.out.println("Level: " + level);
+            System.out.println("Total Kills: " + totalKills);
+            System.out.println("Requirement: " + requirement);
         }
 
         move();
@@ -165,7 +181,12 @@ public class Player extends Creature
                 continue;
             if (e.getCollisionBounds(0, 0).intersects(ar))
             {
-                e.hurt(power / 2);
+                e.hurt(power);
+                if (e.getHealth() <= 0)
+                {
+                    exp++;
+                    totalKills++;
+                }
                 return;
             }
         }
@@ -259,6 +280,7 @@ public class Player extends Creature
 
                 handler.getWorld().setTile(mouseX / Tile.SIZE, mouseY / Tile.SIZE, handler.getWorld().getBelowTile(mouseX / Tile.SIZE, mouseY / Tile.SIZE).getID());
                 handler.getWorld().setBelowTile(mouseX / Tile.SIZE, mouseY / Tile.SIZE, handler.getWorld().getDefBelowTile(mouseX / Tile.SIZE, mouseY / Tile.SIZE).getID());
+                handler.getWorld().updateChunk();
             }
         }
 
@@ -281,6 +303,7 @@ public class Player extends Creature
                     handler.getWorld().setBelowTile(mouseX / Tile.SIZE, mouseY / Tile.SIZE, posTileID);
                     handler.getWorld().setTile(mouseX / Tile.SIZE, mouseY / Tile.SIZE, blockType);
                     inventory.getActiveItem().setCount(inventory.getActiveItem().getCount() - 1);
+                    handler.getWorld().updateChunk();
                 }
             }
 
@@ -346,6 +369,18 @@ public class Player extends Creature
             {
                 canBuild = false;
             }
+            else if (inventory.getActiveItem().getID() == ItemManager.swordItem.getID() && inventory.getActiveItem().getCount() > 0)
+            {
+                canBuild = false;
+            }
+            else if (inventory.getActiveItem().getID() == ItemManager.rawIronItem.getID() && inventory.getActiveItem().getCount() > 0)
+            {
+                canBuild = false;
+            }
+            else if (inventory.getActiveItem().getID() == ItemManager.ironItem.getID() && inventory.getActiveItem().getCount() > 0)
+            {
+                canBuild = false;
+            }
 
             if (inventory.getActiveItem().getCount() == 0)
                 canBuild = false;
@@ -369,14 +404,37 @@ public class Player extends Creature
         if (!attacking)
             g.drawImage(getCurrentAnimationFrame(), (int) (x - handler.getCamera().getxOffset()), (int) (y - handler.getCamera().getyOffset()), width, height, null);
         else if (attacking && direction == 0)
+        {
             g.drawImage(Assets.playerRightPunch, (int) (x - handler.getCamera().getxOffset()), (int) (y - handler.getCamera().getyOffset()), width, height, null);
+            if (inventory.getActiveItem() != null)
+            {
+                g.drawImage(inventory.getActiveItem().getTexture(), (int) (x - handler.getCamera().getxOffset()) + width - 10, (int) (y - handler.getCamera().getyOffset()) + 10, 16, 16, null);
+            }
+        }
         else if (attacking && direction == 1)
+        {
             g.drawImage(Assets.playerLeftPunch, (int) (x - handler.getCamera().getxOffset()), (int) (y - handler.getCamera().getyOffset()), width, height, null);
+            if (inventory.getActiveItem() != null)
+            {
+                g.drawImage(inventory.getActiveItem().getTexture(), (int) (x - handler.getCamera().getxOffset()) - 8, (int) (y - handler.getCamera().getyOffset()) + 10, 16, 16, null);
+            }
+        }
         else if (attacking && direction == 2)
+        {
             g.drawImage(Assets.playerUpPunch, (int) (x - handler.getCamera().getxOffset()), (int) (y - handler.getCamera().getyOffset()), width, height, null);
+            if (inventory.getActiveItem() != null)
+            {
+                g.drawImage(inventory.getActiveItem().getTexture(), (int) (x - handler.getCamera().getxOffset()) + width - 15, (int) (y - handler.getCamera().getyOffset()), 12, 12, null);
+            }
+        }
         else if (attacking && direction == 3)
+        {
             g.drawImage(Assets.playerDownPunch, (int) (x - handler.getCamera().getxOffset()), (int) (y - handler.getCamera().getyOffset()), width, height, null);
-
+            if (inventory.getActiveItem() != null)
+            {
+                g.drawImage(inventory.getActiveItem().getTexture(), (int) (x - handler.getCamera().getxOffset()) + width - 20, (int) (y - handler.getCamera().getyOffset()) + 10, 20, 20, null);
+            }
+        }
     }
 
     public void topRender(Graphics g)
