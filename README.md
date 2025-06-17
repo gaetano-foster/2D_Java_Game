@@ -1,18 +1,18 @@
-**2D Sandbox Game (Java)**
+# 2D Java Sandbox Game 
 
 ---
 
-**Description**
+## Description
 A top-down, tile-based sandbox game inspired by Minecraft, written in Java. Originally developed at age 13, the project showcases early use of Perlin noise for procedural world generation and basic physics/math for tile interaction.
 
-**Features**
+## Features
 
 * Randomized world generation using Perlin noise
 * Tile-based interaction and collision
 * Rudimentary sandbox mechanics
 * Basic game physics and distance-based constraints
 
-**Controls**
+## Controls
 
 * `WASD`: Move character
 * `Space`: Punch
@@ -21,7 +21,7 @@ A top-down, tile-based sandbox game inspired by Minecraft, written in Java. Orig
 * `Left Mouse Button`: Place tile
 * `Z`: Toggle between wall/floor tile types
 
-**Development Notes**
+## Development Notes
 
 * Codebase contains legacy logic and non-modular design due to the project's early inception.
 * Actively working on an updated, refactored version.
